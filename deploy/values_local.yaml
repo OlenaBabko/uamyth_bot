@@ -1,0 +1,23 @@
+main_resources:
+  requests:
+    cpu: 2
+    memory: 2Gi
+  limits:
+    memory: 4Gi
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 90
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "194.183.171.25/32, 49.12.246.192/32, 213.174.150.0/24"
+  addUrls:
+    - https://knowledgebase-app.maklai.dev/

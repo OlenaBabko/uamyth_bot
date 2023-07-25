@@ -1,0 +1,67 @@
+version: 1
+disable_existing_loggers: False # required to override uvicorn's default logging config
+
+filters:
+  not_error_filter:
+    (): app.utils.logging.NotErrorFilter
+
+formatters:
+  default:
+    format: "%(asctime)s [%(process)d] [%(levelname)s] %(message)s"
+    encoding: utf-8
+    unicode: yes
+  app:
+    format: "%(asctime)s [%(process)d] [%(levelname)s] %(message)s"
+    encoding: utf-8
+    unicode: yes
+  access:
+    format: "%(asctime)s [%(process)d] [%(levelname)s] %(message)s"
+    encoding: utf-8
+    unicode: yes
+
+handlers:
+  default_stdout:
+    class: logging.StreamHandler
+    formatter: default
+    stream: ext://sys.stdout
+    filters: [not_error_filter]
+    level: DEBUG
+  default_stderr:
+    class: logging.StreamHandler
+    formatter: default
+    stream: ext://sys.stderr
+    level: ERROR
+  app_stdout:
+    class: logging.StreamHandler
+    formatter: app
+    stream: ext://sys.stdout
+    filters: [not_error_filter]
+  app_stderr:
+    class: logging.StreamHandler
+    formatter: app
+    stream: ext://sys.stderr
+    level: ERROR
+  access_stdout:
+    class: logging.StreamHandler
+    formatter: access
+    stream: ext://sys.stdout
+    filters: [not_error_filter]
+  access_stderr:
+    class: logging.StreamHandler
+    formatter: access
+    stream: ext://sys.stderr
+    level: ERROR
+
+root:
+  level: INFO
+  handlers: [default_stdout, default_stderr]
+
+loggers:
+  app:
+    level: DEBUG
+    propagate: False
+    handlers: [app_stdout, app_stderr]
+  gunicorn.access:
+    level: INFO
+    propagate: False
+    handlers: [access_stdout, access_stderr]

@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "KnowledgeBaseQA"
+version = "0.1"
+description = "Chat Bot for answering questions about company documents"
+readme = "README.md"
+authors = [
+    "Andrii Hladkyi <andrii.hladkyi@maklai.com.ua>",
+]
+license = "Copyright TOV \"Maklai\""
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+llama_index = "0.6.16.post1"
+setuptools = "^68.0.0"
+python-dotenv = "^1.0.0"
+black = "^23.3.0"
+isort = "^5.12.0"
+uvicorn = "^0.22.0"
+mypy = "^1.4.1"
+slack-bolt = "^1.18.0"
+debugpy = "^1.6.7"
+fastapi = "^0.100.0"
+types-pyyaml = "^6.0.12.10"
+google-auth = "^2.22.0"
+google-auth-httplib2 = "^0.1.0"
+google-auth-oauthlib = "^1.0.0"
+google-api-python-client = "^2.94.0"
+openai = "^0.27.8"
+python-telegram-bot = "^20.4"
+
+
+[tool.black]
+line-length = 119
+
+[tool.mypy]
+strict = true
+
+# The following options are desired but currently are too strict for the codebase.
+disallow_incomplete_defs = false
+disallow_untyped_defs = false
+warn_return_any = false
+
+plugins = ["pydantic.mypy"]
+
+ignore_missing_imports = true
+
+disallow_subclassing_any = false
+
+[tool.poetry.scripts]
+my-script = "my_package.log_revision:start"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
